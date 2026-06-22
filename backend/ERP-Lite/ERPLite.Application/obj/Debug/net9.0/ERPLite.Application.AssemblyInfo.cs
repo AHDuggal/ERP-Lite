@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ERPLite.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9ab540fbdce57f690d96a673349d1d9de734068b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d100546ee4214f9a8a21af18c9ea9df336f733e7")]
 [assembly: System.Reflection.AssemblyProductAttribute("ERPLite.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ERPLite.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
