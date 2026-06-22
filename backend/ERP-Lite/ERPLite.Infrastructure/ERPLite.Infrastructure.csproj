@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ERPLite.Application\ERPLite.Application.csproj" />
+    <ProjectReference Include="..\ERPLite.Domain\ERPLite.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Identity\" />
+    <Folder Include="Caching\" />
+    <Folder Include="Messaging\" />
+    <Folder Include="Logging\" />
+    <Folder Include="Services\" />
+    <Folder Include="Search\" />
+    <Folder Include="Persistence\" />
+  </ItemGroup>
+
+</Project>
