@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERPLite.Application.Common.Exceptions
+
+namespace ERPLite.Application.Common.Exceptions;
+
+public class NotFoundException : BaseException
 {
-    internal class NotFoundException
+    public NotFoundException(string entity, string key)
+        : base("NotFound", $"{entity} with id {key} was not found.")
     {
     }
 }

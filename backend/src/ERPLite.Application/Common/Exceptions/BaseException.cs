@@ -10,10 +10,7 @@ namespace ERPLite.Application.Common.Exceptions
     {
         public string ErrorCode { get; }
 
-        protected BaseException(
-            string errorCode,
-            string message)
-            : base(message)
+        protected BaseException(string errorCode,string message) : base(message)
         {
             ErrorCode = errorCode;
         }

@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERPLite.Application.Common.Exceptions
+namespace ERPLite.Application.Common.Exceptions;
+
+public class BusinessRuleException : BaseException
 {
-    internal class BusinessRuleException
+    public BusinessRuleException(string message)
+        : base("BusinessRuleViolation", message)
     {
     }
 }
