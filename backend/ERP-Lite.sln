@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERPLite.Domain", "src\ERPLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERPLite.Infrastructure", "src\ERPLite.Infrastructure\ERPLite.Infrastructure.csproj", "{5EF97F77-3AFB-7594-A2F2-4944090DA11A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERPLight.Tests", "tests\ERPLight.Tests\ERPLight.Tests.csproj", "{CD1D1BA7-D090-4E5C-9968-03272F836003}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5EF97F77-3AFB-7594-A2F2-4944090DA11A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EF97F77-3AFB-7594-A2F2-4944090DA11A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EF97F77-3AFB-7594-A2F2-4944090DA11A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD1D1BA7-D090-4E5C-9968-03272F836003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD1D1BA7-D090-4E5C-9968-03272F836003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD1D1BA7-D090-4E5C-9968-03272F836003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD1D1BA7-D090-4E5C-9968-03272F836003}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
