@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERPLite.Application.Common.Exceptions
+namespace ERPLite.Application.Common.Exceptions;
+
+public class ForbiddenException : BaseException
 {
-    internal class ForbiddenException
+    public ForbiddenException(string message)
+        : base("Forbidden", message)
     {
     }
 }

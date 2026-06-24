@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ERPLite.Application.Common.Exceptions
+namespace ERPLite.Application.Common.Exceptions;
+
+public class UnauthorizedException : BaseException
 {
-    internal class UnauthorizedException
+    public UnauthorizedException(string message)
+        : base("Unauthorized", message)
     {
     }
 }
