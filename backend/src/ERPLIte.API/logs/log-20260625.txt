@@ -1,0 +1,15 @@
+2026-06-25 17:31:56.081 +05:00 [INF] Now listening on: https://localhost:7205
+2026-06-25 17:31:56.137 +05:00 [INF] Now listening on: http://localhost:5098
+2026-06-25 17:31:56.257 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-25 17:31:56.258 +05:00 [INF] Hosting environment: Development
+2026-06-25 17:31:56.260 +05:00 [INF] Content root path: C:\Users\duggal\repos\ERP-Lite\backend\src\ERPLIte.API
+2026-06-25 17:32:17.837 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7205/api/health - null null
+2026-06-25 17:32:18.001 +05:00 [INF] Executing endpoint 'ERPLite.API.Controllers.HealthController.Get (ERPLIte.API)'
+2026-06-25 17:32:18.041 +05:00 [INF] Route matched with {action = "Get", controller = "Health"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Get() on controller ERPLite.API.Controllers.HealthController (ERPLIte.API).
+2026-06-25 17:32:18.055 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2026-06-25 17:32:18.066 +05:00 [INF] Executed action ERPLite.API.Controllers.HealthController.Get (ERPLIte.API) in 19.8763ms
+2026-06-25 17:32:18.078 +05:00 [INF] Executed endpoint 'ERPLite.API.Controllers.HealthController.Get (ERPLIte.API)'
+2026-06-25 17:32:18.081 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7205/api/health - 200 null text/plain; charset=utf-8 245.0989ms
+2026-06-25 17:32:18.248 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7205/favicon.ico - null null
+2026-06-25 17:32:18.253 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7205/favicon.ico - 404 0 null 5.0653ms
+2026-06-25 17:32:18.257 +05:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7205/favicon.ico, Response status code: 404
