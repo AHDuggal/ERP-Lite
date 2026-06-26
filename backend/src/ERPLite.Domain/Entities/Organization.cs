@@ -22,6 +22,11 @@ public sealed class Organization : AuditableEntity
         string name,
         string code)
     {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Organization name is required.");
+
+        if (string.IsNullOrWhiteSpace(code))
+            throw new ArgumentException("Organization code is required.");
         Name = name;
         Code = code;
     }
