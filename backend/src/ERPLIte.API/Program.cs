@@ -1,10 +1,13 @@
 using ERPLite.API.Extensions;
+using ERPLite.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddSerilogLogging();
 
 builder.Services.AddApplicationConfiguration(
+    builder.Configuration);
+builder.Services.AddInfrastructure(
     builder.Configuration);
 // Add services to the container.
 
