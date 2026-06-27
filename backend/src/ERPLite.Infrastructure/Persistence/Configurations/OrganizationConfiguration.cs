@@ -27,5 +27,8 @@ public sealed class OrganizationConfiguration
         builder.Property(x => x.Code)
             .HasMaxLength(50)
             .IsRequired();
+
+        builder.HasIndex(x => x.Code)
+    .IsUnique();
     }
 }

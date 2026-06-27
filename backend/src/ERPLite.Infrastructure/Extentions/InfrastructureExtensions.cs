@@ -1,13 +1,16 @@
-﻿using System;
+﻿using ERPLite.Infrastructure.Persistence;
+using ERPLite.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using ERPLite.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using ERPLite.Application.Features.Organizations.Interfaces;
+
 
 namespace ERPLite.Infrastructure.Extensions;
 
@@ -25,6 +28,8 @@ public static class InfrastructureExtensions
             {
                 options.UseSqlServer(connectionString);
             });
+
+        services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 
         return services;
     }

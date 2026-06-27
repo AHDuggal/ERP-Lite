@@ -1,6 +1,25 @@
-@ERPLIte.API_HostAddress = http://localhost:5098
+@ERPLite.API_HostAddress = https://localhost:7205
 
-GET {{ERPLIte.API_HostAddress}}/weatherforecast/
+GET {{ERPLIte.API_HostAddress}}/api/Organizations/
 Accept: application/json
 
 ###
+
+
+
+### Create Organization
+POST {{ERPLite.API_HostAddress}}/api/organizations
+Content-Type: application/json
+
+{
+  "name": "ERP Lite Demo Organization",
+  "code": "ERP001"
+}
+
+### Get Organization By Id
+GET {{ERPLite.API_HostAddress}}/api/organizations/d1da3da0-db45-466e-89e1-08ded434280f
+Accept: application/json
+
+### Not Found Test
+GET {{ERPLite.API_HostAddress}}/api/organizations/11111111-1111-1111-1111-111111111111
+Accept: application/json

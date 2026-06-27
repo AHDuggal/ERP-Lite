@@ -23,4 +23,8 @@ public interface IOrganizationRepository
 
     Task SaveChangesAsync(
         CancellationToken cancellationToken);
+
+    Task<bool> ExistsByCodeAsync(
+    string code,
+    CancellationToken cancellationToken);
 }
