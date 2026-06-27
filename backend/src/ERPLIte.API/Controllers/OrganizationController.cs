@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
+﻿using ERPLite.Application.Common.Models;
 using ERPLite.Application.Features.Organizations.DTOs;
 using ERPLite.Application.Features.Organizations.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace ERPLite.API.Controllers;
@@ -21,38 +21,46 @@ public class OrganizationsController : ControllerBase
 
     [HttpPost]
     public async Task<IActionResult> Create(
-        CreateOrganizationRequest request,
-        CancellationToken cancellationToken)
+    CreateOrganizationRequest request,
+    CancellationToken cancellationToken)
     {
         var result =
             await _organizationService.CreateAsync(
                 request,
                 cancellationToken);
 
-        return Ok(result);
+        return StatusCode(
+            StatusCodes.Status201Created,
+            ApiResponse<OrganizationResponse>.Created(
+                result,
+                "Organization created successfully."));
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll(
-        CancellationToken cancellationToken)
+     CancellationToken cancellationToken)
     {
         var result =
             await _organizationService.GetAllAsync(
                 cancellationToken);
 
-        return Ok(result);
+        return Ok(
+            ApiResponse<List<OrganizationResponse>>
+                .Ok(result));
     }
 
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(
-        Guid id,
-        CancellationToken cancellationToken)
+    Guid id,
+    CancellationToken cancellationToken)
     {
         var result =
             await _organizationService.GetByIdAsync(
                 id,
                 cancellationToken);
 
-        return Ok(result);
+        return Ok(
+            ApiResponse<OrganizationResponse>
+                .Ok(result));
     }
 }
