@@ -5,11 +5,16 @@ ERP-Lite is an enterprise-grade SaaS starter platform built using modern Microso
 
 The primary objective is to create a production-ready ERP foundation that can serve as a reusable starter kit for future SaaS applications.
 
+```
+## Architecture
+
+```text
 ┌───────────────────────────────┐
 │         Angular UI            │
 └───────────────┬───────────────┘
                 │
-┌───────────────▼───────────────┐
+                ▼
+┌───────────────────────────────┐
 │          React UI             │
 └───────────────┬───────────────┘
                 │
@@ -37,9 +42,10 @@ The primary objective is to create a production-ready ERP foundation that can se
                 │
                 ▼
 ┌───────────────────────────────┐
-│          SQL Server           │
-│          Azure SQL            │
+│      SQL Server / Azure SQL   │
 └───────────────────────────────┘
+```
+```
 
 **Technology Stack**
 Backend
@@ -146,6 +152,7 @@ Activity Feed
 Real-Time Task Updates
 
 **Repository Structure**
+
 erp-lite-starter-kit
 │
 ├── backend
@@ -170,6 +177,8 @@ erp-lite-starter-kit
 ├── deployment
 │
 └── scripts
+
+
 
 **Current Modules**
 Implemented
