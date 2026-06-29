@@ -11,8 +11,9 @@ builder.Services.AddApplicationConfiguration(
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(
     builder.Configuration);
+builder.Services.AddApiVersioningConfiguration();
 
-    
+
 // Add services to the container.
 
 builder.Services.AddControllers();

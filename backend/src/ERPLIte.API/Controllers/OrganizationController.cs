@@ -1,4 +1,5 @@
-﻿using ERPLite.Application.Common.Models;
+﻿using Asp.Versioning;
+using ERPLite.Application.Common.Models;
 using ERPLite.Application.Features.Organizations.DTOs;
 using ERPLite.Application.Features.Organizations.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -7,8 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ERPLite.API.Controllers;
 
+//[ApiController]
+//[Route("api/[controller]")]
 [ApiController]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class OrganizationsController : ControllerBase
 {
     private readonly IOrganizationService _organizationService;
