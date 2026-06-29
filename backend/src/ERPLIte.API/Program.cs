@@ -13,6 +13,22 @@ builder.Services.AddInfrastructure(
     builder.Configuration);
 builder.Services.AddApiVersioningConfiguration();
 
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer(
+        (document, context, cancellationToken) =>
+        {
+            document.Info.Title = "ERP Lite API";
+
+            document.Info.Version = "v1";
+
+            document.Info.Description =
+                "Enterprise ERP Starter Kit API";
+
+            return Task.CompletedTask;
+        });
+});
+
 
 // Add services to the container.
 
