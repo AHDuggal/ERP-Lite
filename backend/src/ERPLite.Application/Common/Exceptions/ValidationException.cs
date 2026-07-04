@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ERPLite.Application.Common.Exceptions;
 
-public class ValidationException : BaseException
+public sealed class ValidationException : BaseException
 {
-    public List<string> Errors { get; }
+    public IReadOnlyCollection<string> Errors { get; }
 
     public ValidationException(string message)
         : base("ValidationError", message)
@@ -16,9 +16,9 @@ public class ValidationException : BaseException
         Errors = new List<string> { message };
     }
 
-    public ValidationException(List<string> errors)
+    public ValidationException(IEnumerable<string> errors)
         : base("ValidationError", "Validation failed.")
     {
-        Errors = errors;
+        Errors = errors.ToList();
     }
 }

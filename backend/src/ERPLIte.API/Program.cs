@@ -8,6 +8,9 @@ builder.AddSerilogLogging();
 
 builder.Services.AddApplicationConfiguration(
     builder.Configuration);
+
+
+builder.Services.AddDataProtection();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(
     builder.Configuration);

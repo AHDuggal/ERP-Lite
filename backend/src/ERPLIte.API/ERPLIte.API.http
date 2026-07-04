@@ -12,12 +12,12 @@ POST {{ERPLite.API_HostAddress}}/api/V1/organizations
 Content-Type: application/json
 
 {
-  "name": "ERP Lite Demo Organization",
-  "code": "ERP001"
+  "name": "",
+  "code": ""
 }
 
 ### Get Organization By Id
-GET {{ERPLite.API_HostAddress}}/api/V1/organizations/d1da3da0-db45-466e-89e1-08ded434280f
+GET {{ERPLite.API_HostAddress}}/api/V1/organizations/3bc8d63f-f9e9-4559-11e0-08ded5c937ba
 Accept: application/json
 
 ### Not Found Test

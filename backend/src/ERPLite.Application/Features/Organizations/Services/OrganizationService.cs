@@ -1,13 +1,16 @@
-﻿using System;
+﻿
+using ERPLite.Application.Features.Organizations.DTOs;
+using ERPLite.Application.Features.Organizations.Interfaces;
+using ERPLite.Domain.Entities;
+using FluentValidation;
+
+
+using ERPLite.Application.Common.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using ERPLite.Application.Features.Organizations.DTOs;
-using ERPLite.Application.Features.Organizations.Interfaces;
-using ERPLite.Application.Common.Exceptions;
-using ERPLite.Domain.Entities;
 
 namespace ERPLite.Application.Features.Organizations.Services;
 
@@ -16,41 +19,39 @@ public sealed class OrganizationService
 {
     private readonly IOrganizationRepository _repository;
 
+    
+
+    private readonly FluentValidation.IValidator<CreateOrganizationRequest>
+    _createOrganizationValidator;
     public OrganizationService(
-        IOrganizationRepository repository)
+        IOrganizationRepository repository , IValidator<CreateOrganizationRequest>
+        createOrganizationValidator)
     {
         _repository = repository;
+        _createOrganizationValidator = createOrganizationValidator;
     }
 
     public async Task<OrganizationResponse> CreateAsync(
         CreateOrganizationRequest request,
         CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(request.Name))
+        
+
+        var validationResult = await _createOrganizationValidator.ValidateAsync(
+            request,
+            cancellationToken);
+
+        if (!validationResult.IsValid)
         {
-            throw new ValidationException(
-                new List<string> {
-                    "Organization name is required."
-                });
+            throw new ERPLite.Application.Common.Exceptions.ValidationException(
+                 validationResult.Errors.Select(x => x.ErrorMessage));
         }
 
-        if (string.IsNullOrWhiteSpace(request.Code))
-        {
-            throw new ValidationException( 
-                new List<string>
-                {
-                    "Organization code is required."
-                });
-        }
-
-        var exists =
-    await _repository.ExistsByCodeAsync(
-        request.Code,
-        cancellationToken);
+        var exists = await _repository.ExistsByCodeAsync(request.Code, cancellationToken);
 
         if (exists)
         {
-            throw new ValidationException(
+            throw new ERPLite.Application.Common.Exceptions.ValidationException(
                 $"Organization code '{request.Code}' already exists.");
         }
 

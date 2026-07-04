@@ -1,4 +1,6 @@
-﻿using ERPLite.Infrastructure.Persistence;
+﻿using ERPLite.Application.Features.Organizations.Interfaces;
+using ERPLite.Domain.Entities;
+using ERPLite.Infrastructure.Persistence;
 using ERPLite.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using ERPLite.Application.Features.Organizations.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace ERPLite.Infrastructure.Extensions;
@@ -30,6 +32,12 @@ public static class InfrastructureExtensions
             });
 
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+
+     services.AddIdentityCore<ApplicationUser>()
+    .AddRoles<ApplicationRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
 
         return services;
     }

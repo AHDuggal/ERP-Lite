@@ -35,7 +35,7 @@ public sealed class GlobalExceptionMiddleware
             ValidationException ex => BuildResponse(
                 StatusCodes.Status400BadRequest,
                 ex.ErrorCode,
-                ex.Message),
+                ex.Message, ex.Errors),
 
             UnauthorizedException ex => BuildResponse(
                 StatusCodes.Status401Unauthorized,
@@ -76,15 +76,17 @@ public sealed class GlobalExceptionMiddleware
     }
 
     private static ApiErrorResponse BuildResponse(
-        int statusCode,
-        string errorCode,
-        string message)
+    int statusCode,
+    string errorCode,
+    string message,
+    IEnumerable<string>? errors = null)
     {
         return new ApiErrorResponse
         {
             StatusCode = statusCode,
             ErrorCode = errorCode,
-            Message = message
+            Message = message,
+            Errors = errors?.ToList() ?? []
         };
     }
 }
