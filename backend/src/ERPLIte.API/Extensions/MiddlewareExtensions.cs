@@ -7,10 +7,9 @@ public static class MiddlewareExtensions
     public static IApplicationBuilder UseCustomMiddleware(
         this IApplicationBuilder app)
     {
-        app.UseMiddleware<CorrelationIdMiddleware>();
-
         app.UseMiddleware<GlobalExceptionMiddleware>();
-
+        app.UseMiddleware<CorrelationIdMiddleware>();
+        
         return app;
     }
 }

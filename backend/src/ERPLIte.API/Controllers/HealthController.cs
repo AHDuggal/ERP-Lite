@@ -1,9 +1,11 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ERPLite.API.Controllers;
 
+[AllowAnonymous]
 [ApiController]
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
@@ -15,4 +17,7 @@ public class HealthController : ControllerBase
     {
         return Ok("ERP-Lite API is running");
     }
+
+
+
 }

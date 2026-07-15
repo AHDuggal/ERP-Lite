@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ValidationException = ERPLite.Application.Common.Exceptions.ValidationException;
 
 namespace ERPLite.Application.Features.Organizations.Services;
 
@@ -21,31 +22,17 @@ public sealed class OrganizationService
 
     
 
-    private readonly FluentValidation.IValidator<CreateOrganizationRequest>
-    _createOrganizationValidator;
+  
     public OrganizationService(
-        IOrganizationRepository repository , IValidator<CreateOrganizationRequest>
-        createOrganizationValidator)
+        IOrganizationRepository repository)
     {
-        _repository = repository;
-        _createOrganizationValidator = createOrganizationValidator;
+        _repository = repository;  
     }
 
     public async Task<OrganizationResponse> CreateAsync(
         CreateOrganizationRequest request,
         CancellationToken cancellationToken)
-    {
-        
-
-        var validationResult = await _createOrganizationValidator.ValidateAsync(
-            request,
-            cancellationToken);
-
-        if (!validationResult.IsValid)
-        {
-            throw new ERPLite.Application.Common.Exceptions.ValidationException(
-                 validationResult.Errors.Select(x => x.ErrorMessage));
-        }
+    {               
 
         var exists = await _repository.ExistsByCodeAsync(request.Code, cancellationToken);
 
@@ -106,6 +93,60 @@ public sealed class OrganizationService
                         "Organization",
                         id.ToString());
         }
+
+        return new OrganizationResponse
+        {
+            Id = organization.Id,
+            Name = organization.Name,
+            Code = organization.Code
+        };
+    }
+
+    public async Task DeleteAsync(
+    Guid id,
+    CancellationToken cancellationToken)
+    {
+        await _repository.DeleteAsync(
+            id,
+            cancellationToken);
+    }
+
+    public async Task<OrganizationResponse> UpdateAsync(
+    UpdateOrganizationRequest request,
+    CancellationToken cancellationToken)
+    {        
+
+        var organization =
+            await _repository.GetByIdAsync(
+                request.Id,
+                cancellationToken);
+
+        if (organization is null)
+        {
+            throw new NotFoundException(
+                "Organization",
+                request.Id);
+        }
+
+        var exists =
+            await _repository.ExistsByCodeAsync(
+                request.Code,
+                request.Id,
+                cancellationToken);
+
+        if (exists)
+        {
+            throw new ValidationException(
+                $"Organization code '{request.Code}' already exists.");
+        }
+
+        organization.Update(
+            request.Name,
+            request.Code);
+
+        await _repository.UpdateAsync(
+            organization,
+            cancellationToken);
 
         return new OrganizationResponse
         {

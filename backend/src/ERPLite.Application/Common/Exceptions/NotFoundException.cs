@@ -9,7 +9,7 @@ namespace ERPLite.Application.Common.Exceptions;
 
 public class NotFoundException : BaseException
 {
-    public NotFoundException(string entity, string key)
+    public NotFoundException(string entity, object? key)
         : base("NotFound", $"{entity} with id {key} was not found.")
     {
     }

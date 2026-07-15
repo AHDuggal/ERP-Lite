@@ -9,11 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ERPLite.Infrastructure.Persistence;
 
-public class ApplicationDbContext
-    : IdentityDbContext<
-        ApplicationUser,
-        ApplicationRole,
-        Guid>
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser,ApplicationRole,Guid>
 {
     public ApplicationDbContext(
         DbContextOptions<ApplicationDbContext> options)

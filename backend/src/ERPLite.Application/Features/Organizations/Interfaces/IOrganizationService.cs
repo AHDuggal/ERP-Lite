@@ -20,4 +20,13 @@ public interface IOrganizationService
     Task<OrganizationResponse> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken);
+
+    Task DeleteAsync(
+    Guid id,
+    CancellationToken cancellationToken);
+
+   
+    Task<OrganizationResponse> UpdateAsync(
+    UpdateOrganizationRequest request,
+    CancellationToken cancellationToken);
 }

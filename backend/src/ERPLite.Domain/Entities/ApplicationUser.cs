@@ -21,6 +21,19 @@ public class ApplicationUser : IdentityUser<Guid>
 
     public DateTime? LastLoginOnUtc { get; set; }
 
+
+    public string? PhoneNumber2 { get; set; }
+
+    public string? JobTitle { get; set; }
+
+    public string? Department { get; set; }
+
+    public string? ProfileImageUrl { get; set; }
+
+    public bool IsDeleted { get; set; }
+
+    public DateTime? UpdatedOnUtc { get; set; }
+
     public ICollection<RefreshToken> RefreshTokens
         = new List<RefreshToken>();
 }

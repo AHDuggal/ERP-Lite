@@ -20,11 +20,24 @@ public class RefreshToken
 
     public DateTime? RevokedOnUtc { get; set; }
 
-    public bool IsRevoked =>
-        RevokedOnUtc.HasValue;
-
     public Guid UserId { get; set; }
 
     public ApplicationUser User { get; set; }
         = null!;
+
+
+    public string? ReplacedByToken { get; set; }
+
+    public string? RevocationReason { get; set; }
+
+    public bool IsRevoked =>
+        RevokedOnUtc.HasValue;
+
+    public bool IsExpired =>
+        DateTime.UtcNow >= ExpiresOnUtc;
+
+    public bool IsActive =>
+       !IsExpired && !IsRevoked;
+
+
 }

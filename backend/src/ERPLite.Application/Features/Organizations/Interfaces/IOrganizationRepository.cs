@@ -27,4 +27,16 @@ public interface IOrganizationRepository
     Task<bool> ExistsByCodeAsync(
     string code,
     CancellationToken cancellationToken);
+
+    Task<bool> ExistsByCodeAsync(
+   string code,
+   Guid excludeId,
+   CancellationToken cancellationToken);
+    Task DeleteAsync(
+    Guid id,
+    CancellationToken cancellationToken);
+
+    Task UpdateAsync(
+    Organization organization,
+    CancellationToken cancellationToken);
 }

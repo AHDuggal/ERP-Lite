@@ -1,5 +1,5 @@
 ﻿using ERPLite.API.Configuration;
-
+using ERPLite.Application.Common.Settings;
 namespace ERPLite.API.Extensions;
 
 public static class ServiceCollectionExtensions

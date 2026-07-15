@@ -8,6 +8,7 @@ namespace ERPLite.Application.Features.Organizations.DTOs;
 
 public sealed class UpdateOrganizationRequest
 {
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
 
     public string Code { get; set; } = string.Empty;

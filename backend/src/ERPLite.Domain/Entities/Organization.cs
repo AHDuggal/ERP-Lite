@@ -30,4 +30,29 @@ public sealed class Organization : AuditableEntity
         Name = name;
         Code = code;
     }
+
+
+    public DateTime CreatedOnUtc { get; private set; }
+    = DateTime.UtcNow;
+
+    public DateTime? UpdatedOnUtc { get; private set; }
+
+    public DateTime? DeletedOnUtc { get; private set; }
+
+    public bool IsDeleted { get; private set; }
+
+    public void Update(
+    string name,
+    string code)
+    {
+        Name = name;
+        Code = code;
+        UpdatedOnUtc = DateTime.UtcNow;
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+        DeletedOnUtc = DateTime.UtcNow;
+    }
 }

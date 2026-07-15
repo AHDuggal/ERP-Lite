@@ -1,6 +1,37 @@
 @ERPLite.API_HostAddress = https://localhost:7205
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmZjJhM2Q5ZC1jMmUyLTQyODAtYWI0My0wOGRlZGMyZTg3YmQiLCJlbWFpbCI6ImFkbWluQGVycGxpdGUuY29tIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlcnBsaXRlLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WyJBZG1pbiIsIk1hbmFnZXIiXSwiZXhwIjoxNzg0MDMyNjE5LCJpc3MiOiJFUlBMaXRlIiwiYXVkIjoiRVJQTGl0ZS5DbGllbnQifQ.5z4fHK6EbhavDrFnqk3p-mDmLBWYQqO922G6ejFcBT4
+@RefToken = WsLC5klvFkv9c6nwEIJsd/Sib6wuwiBmlc0dJqP59+SiIxbYBbeHg6G/lLAkd9PcdF9biY90KHCCD5SrF0Mbzg==
+    
+    
+### Login Request
+POST {{ERPLite.API_HostAddress}}/api/V1/Auth/login
+Content-Type: application/json
 
+{
+  "email": "admin@erplite.com",
+  "password": "Admin@654321"
+}
+
+### Login Request
+POST {{ERPLite.API_HostAddress}}/api/V1/Auth/Refresh
+Content-Type: application/json
+
+{
+   "refreshToken": "{{RefToken}}"
+}
+
+### Logout Request
+POST {{ERPLite.API_HostAddress}}/api/V1/Auth/logout
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+   "refreshToken": "{{RefToken}}"
+} 
+
+###
 GET {{ERPLIte.API_HostAddress}}/api/V1/Organizations/
+Authorization: Bearer {{token}}
 Accept: application/json
 
 ###
@@ -9,17 +40,105 @@ Accept: application/json
 
 ### Create Organization
 POST {{ERPLite.API_HostAddress}}/api/V1/organizations
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "name": "",
-  "code": ""
+  "name": "This is test organization",
+  "code": "TEST_ORG"
 }
 
 ### Get Organization By Id
-GET {{ERPLite.API_HostAddress}}/api/V1/organizations/3bc8d63f-f9e9-4559-11e0-08ded5c937ba
+GET {{ERPLite.API_HostAddress}}/api/V1/organizations/4bc8d63f-f9e9-4559-11e0-08ded5c937ba
+Authorization: Bearer {{token}}
 Accept: application/json
 
 ### Not Found Test
-GET {{ERPLite.API_HostAddress}}/api/V1/organizations/11111111-1111-1111-1111-111111111111
+GET {{ERPLite.API_HostAddress}}/api/V1/organizations/10c28860-b1a2-4252-5a78-08dee03f83e6
+Authorization: Bearer {{token}}
 Accept: application/json
+
+####
+
+GET {{ERPLIte.API_HostAddress}}/api/V1/users/
+Authorization: Bearer {{token}}
+Accept: application/json
+
+
+### Get User by Id
+
+GET {{ERPLite.API_HostAddress}}/api/V1/users/ff2a3d9d-c2e2-4280-ab43-08dedc2e87bd
+Authorization: Bearer {{token}}
+Accept : application/json
+
+### Create user
+POST {{ERPLite.API_HostAddress}}/api/V1/users
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Manager",
+  "description": "Manager Role"
+}
+
+####
+
+GET {{ERPLIte.API_HostAddress}}/api/V1/roles/
+Authorization: Bearer {{token}}
+Accept: application/json
+
+###
+
+### Create Role
+POST {{ERPLite.API_HostAddress}}/api/V1/Roles
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Manager",
+  "description": "Manager Role"
+}
+
+### assign role to user
+POST {{ERPLite.API_HostAddress}}/api/V1/Roles/assign
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "userId": "ff2a3d9d-c2e2-4280-ab43-08dedc2e87bd",
+  "roleName": "Manager"
+}
+### get user roles by id
+GET {{ERPLite.API_HostAddress}}/api/V1/roles/user/f2a3d9d-c2e2-4280-ab43-08dedc2e87bd
+Authorization: Bearer {{token}}
+Accept : application/json
+
+### changes password  
+POST {{ERPLite.API_HostAddress}}/api/v1/Auth/change-password
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "currentPassword": "Admin@654321",
+  "newPassword": "",
+  "confirmPassword": ""
+}
+
+### forgot password
+POST {{ERPLite.API_HostAddress}}/api/v1/Auth/forgot-password
+Content-Type: application/json
+{
+  "email": "admin@erplite.com"
+}
+
+### reset password  
+POST {{ERPLite.API_HostAddress}}/api/v1/Auth/reset-password
+Content-Type: application/json
+{
+  "email": "admin@erplite.com",
+  "token": "CfDJ8Iq51jf/2uxFrMny058aJP/pOVKoOf9Jwb01cO60RjDQ6wN9pNmE+Zc7qjHvQquoVvq2dKqyN5Fr4laK63SGlV/Xudef8ql23KC+oyGtQU2xO67XnrcuBEAiDp4+dr9RrvW4JQlVRBR+GnpyNTxl5h+v7Jy8f9CI5cCa+JZ0iqQXYATuCDlzkGGAIzEN7wgPyKHMMbfOiZGfT7yOcbDyUSvuikEs1QfvabYL1aa2ly5w",
+  "newPassword": "9",
+  "confirmPassword": "Admin"
+}
+
+

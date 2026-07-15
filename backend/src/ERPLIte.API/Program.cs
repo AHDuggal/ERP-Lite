@@ -1,57 +1,103 @@
 using ERPLite.API.Extensions;
-using ERPLite.Infrastructure.Extensions;
+using ERPLite.API.Filters;
 using ERPLite.Application.DependencyInjection;
+using ERPLite.Infrastructure.Extensions;
+using ERPLite.Infrastructure.Identity;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddSerilogLogging();
 
-builder.Services.AddApplicationConfiguration(
-    builder.Configuration);
-
-
 builder.Services.AddDataProtection();
+builder.Services.AddScoped<ValidationFilter>();
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure(
-    builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApiVersioningConfiguration();
 
-builder.Services.AddOpenApi(options =>
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen(options =>
 {
-    options.AddDocumentTransformer(
-        (document, context, cancellationToken) =>
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "ERP Lite API",
+        Version = "v1",
+        Description = "Enterprise ERP Starter Kit API"
+    });
+
+    options.AddSecurityDefinition(
+        "Bearer",
+        new Microsoft.OpenApi.Models.OpenApiSecurityScheme
         {
-            document.Info.Title = "ERP Lite API";
+            Name = "Authorization",
+            Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+            Scheme = "bearer",
+            BearerFormat = "JWT",
+            In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+            Description = "Enter: Bearer {JWT Token}"
+        });
 
-            document.Info.Version = "v1";
+    options.AddSecurityRequirement(
+        new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+        {
+            {
+                new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                {
+                    Reference =
+                        new Microsoft.OpenApi.Models.OpenApiReference
+                        {
+                            Type =
+                                Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
 
-            document.Info.Description =
-                "Enterprise ERP Starter Kit API";
+                            Id = "Bearer"
+                        }
+                },
 
-            return Task.CompletedTask;
+                Array.Empty<string>()
+            }
         });
 });
 
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+//builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidationFilter>();
+});
+
 
 var app = builder.Build();
+
+using (var scope =
+    app.Services.CreateScope())
+{
+    await IdentitySeeder.SeedAsync(
+        scope.ServiceProvider);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint(
+            "/swagger/v1/swagger.json",
+            "ERP Lite API v1");
+
+        options.RoutePrefix = "swagger";
+    });
 }
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
 app.UseCustomMiddleware();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
