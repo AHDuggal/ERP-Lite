@@ -15,6 +15,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ERPLite.Application.Features.Profile.Interfaces;
+using ERPLite.Application.Features.Profile.Services;
 
 namespace ERPLite.Application.DependencyInjection;
 
@@ -27,6 +29,7 @@ public static class ApplicationExtensions
         services.AddScoped<IAuthenticationService,  AuthenticationService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<IProfileService, ProfileService>();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         return services;

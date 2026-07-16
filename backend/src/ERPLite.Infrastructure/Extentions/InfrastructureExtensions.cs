@@ -1,10 +1,13 @@
-﻿using ERPLite.Application.Features.Authentication.Interfaces;
+﻿using ERPLite.Application.Common.Interfaces;
+using ERPLite.Application.Common.Settings;
+using ERPLite.Application.Features.Authentication.Interfaces;
 using ERPLite.Application.Features.Organizations.Interfaces;
 using ERPLite.Application.Features.Roles.Interfaces;
 using ERPLite.Domain.Entities;
 using ERPLite.Infrastructure.Identity;
 using ERPLite.Infrastructure.Persistence;
 using ERPLite.Infrastructure.Repositories;
+using ERPLite.Infrastructure.Storage;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +21,7 @@ using System.Threading.Tasks;
 
 
 
+
 namespace ERPLite.Infrastructure.Extensions;
 
 public static class InfrastructureExtensions
@@ -25,6 +29,11 @@ public static class InfrastructureExtensions
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services, IConfiguration configuration)
     {
+
+        services.Configure<AzureBlobStorageSettings>(
+    configuration.GetSection(
+        AzureBlobStorageSettings.SectionName));
+
         services.AddConfiguration(configuration);
         services.AddAuthenticationConfiguration(configuration);
         var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -39,6 +48,7 @@ public static class InfrastructureExtensions
         services.AddScoped<ITokenService, JwtTokenService>();
         services.AddScoped<IIdentityService, IdentityService>();
         services.AddScoped<IRoleIdentityService, RoleIdentityService>();
+        services.AddScoped<IFileStorageService, AzureBlobStorageService>();
 
         services.AddIdentityCore<ApplicationUser>(options =>
         {
@@ -46,7 +56,11 @@ public static class InfrastructureExtensions
         })
         .AddRoles<ApplicationRole>()
         .AddEntityFrameworkStores<ApplicationDbContext>()
-        .AddDefaultTokenProviders();        
+        .AddDefaultTokenProviders();
+
+        services.AddHttpContextAccessor();
+
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
 
         return services;
     }

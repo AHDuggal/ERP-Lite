@@ -2,6 +2,7 @@
 using ERPLite.Application.Common.Extentions;
 using ERPLite.Application.Common.Models;
 using ERPLite.Application.Features.Authentication.Interfaces;
+using ERPLite.Application.Features.Profile.DTOs;
 using ERPLite.Application.Features.Users.DTOs;
 using ERPLite.Domain.Entities;
 using ERPLite.Infrastructure.Persistence;
@@ -40,7 +41,7 @@ namespace ERPLite.Infrastructure.Identity
             return await _userManager
                 .CheckPasswordAsync(
                     user,
-                    password);  
+                    password);
         }
 
         public async Task<IList<string>> GetRolesAsync(ApplicationUser user)
@@ -50,9 +51,9 @@ namespace ERPLite.Infrastructure.Identity
         }
 
         public async Task SaveRefreshTokenAsync(RefreshToken refreshToken, ApplicationUser user, CancellationToken cancellationToken)
-    
+
         {
-            refreshToken.UserId =   user.Id;
+            refreshToken.UserId = user.Id;
 
             _dbContext.RefreshTokens.Add(
                 refreshToken);
@@ -309,7 +310,78 @@ namespace ERPLite.Infrastructure.Identity
             }
         }
 
+
+
+
+        public async Task<ApplicationUser> UpdateMyProfileAsync(
+        Guid userId,
+        UpdateMyProfileRequest request,
+        CancellationToken cancellationToken)
+        {
+            var user =
+                await GetUserByIdAsync(userId);
+
+            if (user is null)
+            {
+                throw new NotFoundException(
+                    "User",
+                    userId);
+            }
+
+            user.FirstName = request.FirstName;
+
+            user.LastName = request.LastName;
+
+            user.PhoneNumber = request.PhoneNumber;
+
+            user.JobTitle = request.JobTitle;
+
+            user.Department = request.Department;
+
+            user.UpdatedOnUtc = DateTime.UtcNow;
+
+            var result =
+                await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                throw new ValidationException(
+                    result.Errors.Select(x => x.Description));
+            }
+
+            return user;
+        }
+    
+
+    public async Task UpdateProfileImageAsync(
+    Guid userId,
+    string imageUrl,
+    CancellationToken cancellationToken)
+        {
+            var user =
+                await GetUserByIdAsync(userId);
+
+            if (user is null)
+            {
+                throw new NotFoundException(
+                    "User",
+                    userId);
+            }
+
+            user.ProfileImageUrl = imageUrl;
+
+            user.UpdatedOnUtc = DateTime.UtcNow;
+
+            var result =
+                await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                throw new ValidationException(
+                    result.Errors.Select(x => x.Description));
+            }
+        }
+
+
     }
-
-
 }

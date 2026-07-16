@@ -1,4 +1,5 @@
 ﻿using ERPLite.Application.Common.Models;
+using ERPLite.Application.Features.Profile.DTOs;
 using ERPLite.Application.Features.Roles.DTOs;
 using  ERPLite.Application.Features.Users.DTOs;
 using ERPLite.Domain.Entities;
@@ -75,7 +76,14 @@ public interface IIdentityService
         string token,
         string newPassword);
 
+    Task<ApplicationUser> UpdateMyProfileAsync(
+    Guid userId,
+    UpdateMyProfileRequest request,
+    CancellationToken cancellationToken);
 
-    //methods related to roles in Identity contract
 
+    Task UpdateProfileImageAsync(
+    Guid userId,
+    string imageUrl,
+    CancellationToken cancellationToken);
 }
