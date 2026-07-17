@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ERPLite.Application.Common.Models;
-using ERPLite.Application.Common.Extentions;
+using ERPLite.Application.Common.Extensions;
 namespace ERPLite.Application.Features.Users.Services;
 
 public class UserService : IUserService

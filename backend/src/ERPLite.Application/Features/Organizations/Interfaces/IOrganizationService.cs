@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using ERPLite.Application.Common.Models;
 using ERPLite.Application.Features.Organizations.DTOs;
 
 namespace ERPLite.Application.Features.Organizations.Interfaces;
@@ -14,7 +9,8 @@ public interface IOrganizationService
         CreateOrganizationRequest request,
         CancellationToken cancellationToken);
 
-    Task<List<OrganizationResponse>> GetAllAsync(
+    Task<PagedResult<OrganizationResponse>> GetAllAsync(
+        QueryParameters parameters,
         CancellationToken cancellationToken);
 
     Task<OrganizationResponse> GetByIdAsync(
@@ -22,11 +18,10 @@ public interface IOrganizationService
         CancellationToken cancellationToken);
 
     Task DeleteAsync(
-    Guid id,
-    CancellationToken cancellationToken);
+        Guid id,
+        CancellationToken cancellationToken);
 
-   
     Task<OrganizationResponse> UpdateAsync(
-    UpdateOrganizationRequest request,
-    CancellationToken cancellationToken);
+        UpdateOrganizationRequest request,
+        CancellationToken cancellationToken);
 }

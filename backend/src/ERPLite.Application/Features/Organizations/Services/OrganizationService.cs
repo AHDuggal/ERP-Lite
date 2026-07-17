@@ -1,16 +1,8 @@
-﻿
+﻿using ERPLite.Application.Common.Exceptions;
+using ERPLite.Application.Common.Models;
 using ERPLite.Application.Features.Organizations.DTOs;
 using ERPLite.Application.Features.Organizations.Interfaces;
 using ERPLite.Domain.Entities;
-using FluentValidation;
-
-
-using ERPLite.Application.Common.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ValidationException = ERPLite.Application.Common.Exceptions.ValidationException;
 
 namespace ERPLite.Application.Features.Organizations.Services;
@@ -20,25 +12,23 @@ public sealed class OrganizationService
 {
     private readonly IOrganizationRepository _repository;
 
-    
-
-  
     public OrganizationService(
         IOrganizationRepository repository)
     {
-        _repository = repository;  
+        _repository = repository;
     }
 
     public async Task<OrganizationResponse> CreateAsync(
         CreateOrganizationRequest request,
         CancellationToken cancellationToken)
-    {               
-
-        var exists = await _repository.ExistsByCodeAsync(request.Code, cancellationToken);
+    {
+        var exists = await _repository.ExistsByCodeAsync(
+            request.Code,
+            cancellationToken);
 
         if (exists)
         {
-            throw new ERPLite.Application.Common.Exceptions.ValidationException(
+            throw new ValidationException(
                 $"Organization code '{request.Code}' already exists.");
         }
 
@@ -61,21 +51,33 @@ public sealed class OrganizationService
         };
     }
 
-    public async Task<List<OrganizationResponse>> GetAllAsync(
+    public async Task<PagedResult<OrganizationResponse>> GetAllAsync(
+        QueryParameters parameters,
         CancellationToken cancellationToken)
     {
-        var organizations =
+        var pagedOrganizations =
             await _repository.GetAllAsync(
+                parameters,
                 cancellationToken);
 
-        return organizations
-            .Select(x => new OrganizationResponse
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Code = x.Code
-            })
-            .ToList();
+        return new PagedResult<OrganizationResponse>
+        {
+            Items = pagedOrganizations.Items
+                .Select(x => new OrganizationResponse
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Code = x.Code
+                })
+                .ToList(),
+
+            PageNumber = pagedOrganizations.PageNumber,
+            PageSize = pagedOrganizations.PageSize,
+            TotalRecords = pagedOrganizations.TotalRecords,
+            TotalPages = pagedOrganizations.TotalPages,
+            HasNextPage = pagedOrganizations.HasNextPage,
+            HasPreviousPage = pagedOrganizations.HasPreviousPage
+        };
     }
 
     public async Task<OrganizationResponse> GetByIdAsync(
@@ -90,8 +92,8 @@ public sealed class OrganizationService
         if (organization is null)
         {
             throw new NotFoundException(
-                        "Organization",
-                        id.ToString());
+                "Organization",
+                id.ToString());
         }
 
         return new OrganizationResponse
@@ -103,8 +105,8 @@ public sealed class OrganizationService
     }
 
     public async Task DeleteAsync(
-    Guid id,
-    CancellationToken cancellationToken)
+        Guid id,
+        CancellationToken cancellationToken)
     {
         await _repository.DeleteAsync(
             id,
@@ -112,10 +114,9 @@ public sealed class OrganizationService
     }
 
     public async Task<OrganizationResponse> UpdateAsync(
-    UpdateOrganizationRequest request,
-    CancellationToken cancellationToken)
-    {        
-
+        UpdateOrganizationRequest request,
+        CancellationToken cancellationToken)
+    {
         var organization =
             await _repository.GetByIdAsync(
                 request.Id,

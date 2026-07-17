@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using ERPLite.Application.Common.Models;
 using ERPLite.Domain.Entities;
 
 namespace ERPLite.Application.Features.Organizations.Interfaces;
@@ -18,25 +13,27 @@ public interface IOrganizationRepository
         Guid id,
         CancellationToken cancellationToken);
 
-    Task<List<Organization>> GetAllAsync(
+    Task<PagedResult<Organization>> GetAllAsync(
+        QueryParameters parameters,
         CancellationToken cancellationToken);
 
     Task SaveChangesAsync(
         CancellationToken cancellationToken);
 
     Task<bool> ExistsByCodeAsync(
-    string code,
-    CancellationToken cancellationToken);
+        string code,
+        CancellationToken cancellationToken);
 
     Task<bool> ExistsByCodeAsync(
-   string code,
-   Guid excludeId,
-   CancellationToken cancellationToken);
+        string code,
+        Guid excludeId,
+        CancellationToken cancellationToken);
+
     Task DeleteAsync(
-    Guid id,
-    CancellationToken cancellationToken);
+        Guid id,
+        CancellationToken cancellationToken);
 
     Task UpdateAsync(
-    Organization organization,
-    CancellationToken cancellationToken);
+        Organization organization,
+        CancellationToken cancellationToken);
 }

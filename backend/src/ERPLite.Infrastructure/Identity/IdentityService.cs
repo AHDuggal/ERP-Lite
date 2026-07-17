@@ -1,5 +1,5 @@
 ﻿using ERPLite.Application.Common.Exceptions;
-using ERPLite.Application.Common.Extentions;
+using ERPLite.Application.Common.Extensions;
 using ERPLite.Application.Common.Models;
 using ERPLite.Application.Features.Authentication.Interfaces;
 using ERPLite.Application.Features.Profile.DTOs;

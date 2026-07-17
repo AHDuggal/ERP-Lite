@@ -59,26 +59,25 @@ public class OrganizationsController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(ApiResponse<List<OrganizationResponse>>),
+    [ProducesResponseType(
+    typeof(ApiResponse<PagedResult<OrganizationResponse>>),
     StatusCodes.Status200OK)]
-
-    [ProducesResponseType(typeof(ApiErrorResponse),
-    StatusCodes.Status401Unauthorized)]
-
-    [ProducesResponseType(typeof(ApiErrorResponse),
-    StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(
+    typeof(ApiErrorResponse),
+    StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAll(
-     CancellationToken cancellationToken)
+    [FromQuery] QueryParameters parameters,
+    CancellationToken cancellationToken)
     {
         var result =
             await _organizationService.GetAllAsync(
+                parameters,
                 cancellationToken);
 
         return Ok(
-     ApiResponse<List<OrganizationResponse>>
-         .Ok(
-             result,
-             "Organizations retrieved successfully."));
+            ApiResponse<PagedResult<OrganizationResponse>>.Ok(
+                result,
+                "Organizations retrieved successfully."));
     }
 
     [HttpGet("{id:guid}")]

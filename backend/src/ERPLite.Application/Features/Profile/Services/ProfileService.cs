@@ -8,7 +8,6 @@ using ERPLite.Application.Common.Exceptions;
 using ERPLite.Application.Features.Authentication.Interfaces;
 using ERPLite.Application.Features.Profile.DTOs;
 using ERPLite.Application.Features.Profile.Interfaces;
-using ERPLite.Application.Common.Interfaces;
 using ERPLite.Application.Common.Settings;
 
 namespace ERPLite.Application.Features.Profile.Services;

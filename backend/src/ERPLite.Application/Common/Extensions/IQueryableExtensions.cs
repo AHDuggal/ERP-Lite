@@ -2,13 +2,13 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace ERPLIte.API.Extensions
+namespace ERPLite.Application.Common.Extensions
 {
     public static class IQueryableExtensions
     {
         public static IQueryable<T> ApplyPagination<T>(
-        this IQueryable<T> query,
-        QueryParameters parameters)
+            this IQueryable<T> query,
+            QueryParameters parameters)
         {
             return query
                 .Skip((parameters.PageNumber - 1) * parameters.PageSize)
@@ -16,8 +16,8 @@ namespace ERPLIte.API.Extensions
         }
 
         public static IQueryable<T> ApplySorting<T>(
-        this IQueryable<T> query,
-        QueryParameters parameters)
+            this IQueryable<T> query,
+            QueryParameters parameters)
         {
             if (string.IsNullOrWhiteSpace(parameters.SortBy))
                 return query;
@@ -58,13 +58,6 @@ namespace ERPLIte.API.Extensions
 
             return query.Provider.CreateQuery<T>(
                 resultExpression);
-        }
-
-        public static IQueryable<T> ApplySearch<T>(
-        this IQueryable<T> query,
-        Func<IQueryable<T>, IQueryable<T>> searchExpression)
-        {
-            return searchExpression(query);
         }
     }
 }
