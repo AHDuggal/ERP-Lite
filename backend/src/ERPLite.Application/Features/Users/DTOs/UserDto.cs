@@ -32,4 +32,6 @@ public sealed class UserDto
     public DateTime CreatedOnUtc { get; set; }
 
     public DateTime? LastLoginOnUtc { get; set; }
+
+    public IList<string> Roles { get; set; } = new List<string>();
 }

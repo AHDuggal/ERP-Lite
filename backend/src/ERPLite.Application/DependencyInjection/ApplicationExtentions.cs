@@ -1,8 +1,12 @@
 ﻿using ERPLite.Application.Common.Settings;
 using ERPLite.Application.Features.Authentication.Interfaces;
 using ERPLite.Application.Features.Authentication.Services;
+using ERPLite.Application.Features.Authorization.Interfaces;
+using ERPLite.Application.Features.Authorization.Services;
 using ERPLite.Application.Features.Organizations.Interfaces;
 using ERPLite.Application.Features.Organizations.Services;
+using ERPLite.Application.Features.Profile.Interfaces;
+using ERPLite.Application.Features.Profile.Services;
 using ERPLite.Application.Features.Roles.Interfaces;
 using ERPLite.Application.Features.Roles.Services;
 using ERPLite.Application.Features.Users.Interfaces;
@@ -15,8 +19,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using ERPLite.Application.Features.Profile.Interfaces;
-using ERPLite.Application.Features.Profile.Services;
 
 namespace ERPLite.Application.DependencyInjection;
 
@@ -30,6 +32,7 @@ public static class ApplicationExtensions
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IProfileService, ProfileService>();
+        services.AddScoped<IPermissionService, PermissionService>();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         return services;

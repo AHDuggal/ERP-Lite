@@ -1,8 +1,10 @@
 ﻿using ERPLite.Application.Common.Interfaces;
 using ERPLite.Application.Common.Settings;
 using ERPLite.Application.Features.Authentication.Interfaces;
+using ERPLite.Application.Features.Authorization.Interfaces;
 using ERPLite.Application.Features.Organizations.Interfaces;
 using ERPLite.Application.Features.Roles.Interfaces;
+using ERPLite.Application.Features.Users.Interfaces;
 using ERPLite.Domain.Entities;
 using ERPLite.Infrastructure.Identity;
 using ERPLite.Infrastructure.Persistence;
@@ -47,8 +49,10 @@ public static class InfrastructureExtensions
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
         services.AddScoped<ITokenService, JwtTokenService>();
         services.AddScoped<IIdentityService, IdentityService>();
+        services.AddScoped<IUserIdentityService, UserIdentityService>();
         services.AddScoped<IRoleIdentityService, RoleIdentityService>();
         services.AddScoped<IFileStorageService, AzureBlobStorageService>();
+        services.AddScoped<IPermissionRepository, PermissionRepository>();
 
         services.AddIdentityCore<ApplicationUser>(options =>
         {

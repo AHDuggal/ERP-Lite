@@ -1,8 +1,9 @@
 ﻿using Asp.Versioning;
+using ERPLite.API.Authorization;
+using ERPLite.Application.Common.Authorization;
 using ERPLite.Application.Common.Models;
 using ERPLite.Application.Features.Roles.DTOs;
 using ERPLite.Application.Features.Roles.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ERPLite.API.Controllers.V1;
@@ -10,7 +11,7 @@ namespace ERPLite.API.Controllers.V1;
 [ApiController]
 [ApiVersion(1)]
 [Route("api/v{version:apiVersion}/[controller]")]
-[Authorize(Roles = "Admin")]
+
 public class RolesController : ControllerBase
 {
     private readonly IRoleService _roleService;
@@ -21,6 +22,7 @@ public class RolesController : ControllerBase
         _roleService = roleService;
     }
 
+    [HasPermission(Permissions.Roles.View)]
     [HttpGet]
     [ProducesResponseType(typeof(ApiResponse<IEnumerable<RoleDto>>),
     StatusCodes.Status200OK)]
@@ -43,8 +45,9 @@ public class RolesController : ControllerBase
            "Roles retrieved successfully."));
     }
 
+    [HasPermission(Permissions.Roles.View)]
     [HttpGet("{id:guid}")]
-    
+
     [ProducesResponseType(typeof(ApiResponse<RoleDto>),
     StatusCodes.Status200OK)]
 
@@ -71,6 +74,7 @@ public class RolesController : ControllerBase
             "Role retrieved successfully."));
     }
 
+    [HasPermission(Permissions.Roles.Create)]
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponse<RoleDto>),
     StatusCodes.Status201Created)]
@@ -102,8 +106,8 @@ public class RolesController : ControllerBase
         "Role created successfully."));
     }
 
+    [HasPermission(Permissions.Roles.Update)]
     [HttpPut("{id:guid}")]
-
     [ProducesResponseType(typeof(ApiResponse<RoleDto>),
     StatusCodes.Status200OK)]
 
@@ -139,6 +143,7 @@ public class RolesController : ControllerBase
                 "Role updated successfully."));
     }
 
+    [HasPermission(Permissions.Roles.Delete)]
     [HttpDelete("{id:guid}")]
 
     [ProducesResponseType(typeof(ApiResponse<object>),
@@ -166,6 +171,7 @@ public class RolesController : ControllerBase
                 "Role deleted successfully."));
     }
 
+    [HasPermission(Permissions.Roles.Assign)]
     [HttpPost("assign")]
     [ProducesResponseType(typeof(ApiResponse<object>),
     StatusCodes.Status200OK)]
@@ -198,6 +204,7 @@ public class RolesController : ControllerBase
                 "Role assigned successfully."));
     }
 
+    [HasPermission(Permissions.Roles.Remove)]
     [HttpDelete("remove")]
     [ProducesResponseType(typeof(ApiResponse<object>),
     StatusCodes.Status200OK)]
@@ -231,7 +238,10 @@ public class RolesController : ControllerBase
                 "Role removed successfully."));
     }
 
+
+    [HasPermission(Permissions.Roles.View)]
     [HttpGet("user/{userId:guid}")]
+    
     [ProducesResponseType(typeof(ApiResponse<IList<string>>),
     StatusCodes.Status200OK)]
 

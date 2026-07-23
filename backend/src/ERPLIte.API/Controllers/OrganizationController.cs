@@ -1,7 +1,9 @@
 ﻿using Asp.Versioning;
+using ERPLite.API.Authorization;
 using ERPLite.Application.Common.Models;
 using ERPLite.Application.Features.Organizations.DTOs;
 using ERPLite.Application.Features.Organizations.Interfaces;
+using ERPLite.Domain.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,18 +18,17 @@ namespace ERPLite.API.Controllers;
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
 [Produces("application/json")]
-[Authorize(Roles = "Admin")]
 public class OrganizationsController : ControllerBase
 {
     private readonly IOrganizationService _organizationService;
 
-    public OrganizationsController(
-        IOrganizationService organizationService)
+    public OrganizationsController(IOrganizationService organizationService)
     {
         _organizationService = organizationService;
     }
 
     [HttpPost]
+    [HasPermission(Permissions.Organization.Create)]
     [ProducesResponseType(typeof(ApiResponse<OrganizationResponse>),
     StatusCodes.Status201Created)]
 
@@ -59,6 +60,7 @@ public class OrganizationsController : ControllerBase
     }
 
     [HttpGet]
+    [HasPermission(Permissions.Organization.View)]
     [ProducesResponseType(
     typeof(ApiResponse<PagedResult<OrganizationResponse>>),
     StatusCodes.Status200OK)]
@@ -81,6 +83,7 @@ public class OrganizationsController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
+    [HasPermission(Permissions.Organization.View)]
     [ProducesResponseType(typeof(ApiResponse<OrganizationResponse>),
     StatusCodes.Status200OK)]
 
@@ -110,6 +113,7 @@ public class OrganizationsController : ControllerBase
 
 
     [HttpDelete("{id:guid}")]
+    [HasPermission(Permissions.Organization.Delete)]
     [ProducesResponseType(typeof(ApiResponse<object>),
     StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse),
@@ -134,7 +138,10 @@ public class OrganizationsController : ControllerBase
                 "Organization deleted successfully."));
     }
 
+   
     [HttpPut("{id:guid}")]
+    [HasPermission(Permissions.Organization.Update)]
+
     [ProducesResponseType(typeof(ApiResponse<OrganizationResponse>),
     StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse),

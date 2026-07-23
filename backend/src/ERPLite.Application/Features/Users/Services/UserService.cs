@@ -13,10 +13,10 @@ namespace ERPLite.Application.Features.Users.Services;
 
 public class UserService : IUserService
 {
-    private readonly IIdentityService _identityService;
+    private readonly IUserIdentityService _identityService;
 
     public UserService(
-        IIdentityService identityService)
+        IUserIdentityService identityService)
     {
         _identityService = identityService;
     }

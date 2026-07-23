@@ -9,6 +9,7 @@ using ERPLite.Application.Features.Authentication.Interfaces;
 using ERPLite.Application.Features.Profile.DTOs;
 using ERPLite.Application.Features.Profile.Interfaces;
 using ERPLite.Application.Common.Settings;
+using ERPLite.Application.Features.Users.Interfaces;
 
 namespace ERPLite.Application.Features.Profile.Services;
 
@@ -18,23 +19,25 @@ public sealed class ProfileService : IProfileService
 {
     private readonly ICurrentUserService _currentUserService;
     private readonly IIdentityService _identityService;
+    private readonly IUserIdentityService _userIdentityService;
     private readonly IFileStorageService _fileStorageService;
 
     public ProfileService(
     ICurrentUserService currentUserService,
-    IIdentityService identityService,
+    IIdentityService identityService, IUserIdentityService userIdentityService,
     IFileStorageService fileStorageService)
     {
         _currentUserService = currentUserService;
         _identityService = identityService;
         _fileStorageService = fileStorageService;
+        _userIdentityService = userIdentityService;
     }
 
     public async Task<MyProfileDto> GetMyProfileAsync(
         CancellationToken cancellationToken)
     {
         var user =
-            await _identityService.GetUserByIdAsync(
+            await _userIdentityService.GetUserByIdAsync(
                 _currentUserService.UserId);
 
         if (user is null)

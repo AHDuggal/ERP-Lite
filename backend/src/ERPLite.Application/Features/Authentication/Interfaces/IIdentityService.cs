@@ -41,27 +41,7 @@ public interface IIdentityService
 
     //User related methods in Identity contract
     Task<ApplicationUser?> FindByIdAsync(
-        Guid userId);
-    
-
-    Task<PagedResult<ApplicationUser>> GetUsersAsync(
-    QueryParameters parameters,
-    CancellationToken cancellationToken);
-
-    Task<ApplicationUser?> GetUserByIdAsync(
-        Guid id);
-
-    Task<ApplicationUser> CreateUserAsync(
-        CreateUserRequest request,
-        CancellationToken cancellationToken);
-
-    Task<ApplicationUser> UpdateUserAsync(
-        UpdateUserRequest request,
-        CancellationToken cancellationToken);
-
-    Task DeleteUserAsync(
-        Guid id,
-        CancellationToken cancellationToken);
+        Guid userId);            
 
     Task ChangePasswordAsync(
     ApplicationUser user,

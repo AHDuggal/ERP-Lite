@@ -26,6 +26,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser,Applicatio
         
     public DbSet<Organization> Organizations => Set<Organization>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<Permission> Permissions => Set<Permission>();
+    public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
 
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)

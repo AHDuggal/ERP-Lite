@@ -2,11 +2,12 @@
 using ERPLite.Application.Features.Users.DTOs;
 using ERPLite.Application.Features.Users.Interfaces;
 using ERPLite.Application.Common.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ERPLite.Application.Common.Authorization;
+using ERPLite.API.Authorization;
+
 
 namespace ERPLite.API.Controllers.V1;
-[Authorize(Roles = "Admin")]
 [ApiController]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
@@ -20,6 +21,7 @@ public class UsersController : ControllerBase
         _userService = userService;
     }
 
+    [HasPermission(Permissions.Users.View)]
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<UserDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll([FromQuery] QueryParameters parameters, CancellationToken cancellationToken)
@@ -34,6 +36,7 @@ public class UsersController : ControllerBase
         "Users retrieved successfully."));
     }
 
+    [HasPermission(Permissions.Users.View)]
     [HttpGet("{id:guid}")]
     [ProducesResponseType(
     typeof(UserDto),
@@ -55,6 +58,7 @@ public class UsersController : ControllerBase
         "User retrieved successfully."));
     }
 
+    [HasPermission(Permissions.Users.Create)]
     [HttpPost]
     [ProducesResponseType(typeof(UserDto),
     StatusCodes.Status201Created)]
@@ -74,6 +78,7 @@ public class UsersController : ControllerBase
          "User created successfully."));
     }
 
+    [HasPermission(Permissions.Users.Update)]
     [HttpPut("{id:guid}")]
     [ProducesResponseType( typeof(UserDto),
     StatusCodes.Status200OK)]
@@ -96,6 +101,7 @@ public class UsersController : ControllerBase
         "User updated successfully."));
     }
 
+    [HasPermission(Permissions.Users.Delete)]
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

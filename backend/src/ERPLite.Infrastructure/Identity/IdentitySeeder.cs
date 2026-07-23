@@ -1,13 +1,13 @@
-﻿using System;
+﻿using ERPLite.Domain.Entities;
+using ERPLite.Infrastructure.Authorization;
+using ERPLite.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using ERPLite.Domain.Entities;
-
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace ERPLite.Infrastructure.Identity;
 
@@ -25,11 +25,18 @@ public static class IdentitySeeder
             serviceProvider
                 .GetRequiredService<
                     UserManager<ApplicationUser>>();
+        var context =
+    serviceProvider
+        .GetRequiredService<ApplicationDbContext>();
 
         await SeedRolesAsync(roleManager);
 
         await SeedAdminUserAsync(
             userManager);
+
+        await PermissionSeeder.SeedAsync(
+    context,
+    roleManager);
     }
 
     private static async Task SeedRolesAsync(

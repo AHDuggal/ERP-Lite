@@ -16,7 +16,7 @@ namespace ERPLite.Application.Features.Users.Interfaces
     CancellationToken cancellationToken);
 
         Task<ApplicationUser?> GetUserByIdAsync(
-            Guid id);
+        Guid id);
 
         Task<ApplicationUser> CreateUserAsync(
             CreateUserRequest request,
@@ -29,5 +29,7 @@ namespace ERPLite.Application.Features.Users.Interfaces
         Task DeleteUserAsync(
             Guid id,
             CancellationToken cancellationToken);
+
+       
     }
 }
